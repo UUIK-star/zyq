@@ -164,15 +164,21 @@ window.addEventListener('DOMContentLoaded', () => {
 
   function updateCarousel() {
     const radius = getRadius();
-    const ringAngle = -current * angleStep;
-    ring.style.transform = `translate(-50%, -50%) rotateY(${ringAngle}deg)`;
+    
+    // ⭐ 修复核心：大圆环保持居中，不进行 rotateY 旋转，避免子元素基准坐标乱掉
+    ring.style.transform = `translate(-50%, -50%)`;
 
     cards.forEach((card, i) => {
       const diff = normalizeDiff(i);
       const angleDeg = diff * angleStep;
-      const depth = Math.cos((angleDeg * Math.PI) / 180);
+      const angleRad = (angleDeg * Math.PI) / 180;
+      
+      // 依据当前卡片与激活卡片的角度差，动态计算完美的 3D 空间坐标
+      const translateX = Math.sin(angleRad) * radius;
+      const translateZ = Math.cos(angleRad) * radius;
+      const depth = Math.cos(angleRad);
+      
       const isActive = diff === 0;
-
       card.classList.toggle('is-active', isActive);
 
       const scale = isActive ? 1.1 : 0.58 + 0.32 * Math.max(0, depth);
@@ -186,12 +192,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
       const w = card.offsetWidth || card.getBoundingClientRect().width;
       const h = card.offsetHeight || w * 9 / 16;
-      const slotAngle = i * angleStep;
 
       card.style.marginLeft = `${-w / 2}px`;
       card.style.marginTop = `${-h / 2}px`;
+      
+      // ⭐ 通过控制每个卡片自身的旋转和弧度平移，确保当前项永远正对屏幕且处于中心点
       card.style.transform =
-        `rotateY(${slotAngle}deg) translateZ(${radius}px) rotateY(${-slotAngle}deg) scale(${scale})`;
+        `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${angleDeg}deg) scale(${scale})`;
     });
   }
 
@@ -205,11 +212,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   cards.forEach((card, i) => {
     card.addEventListener('click', (e) => {
-      // 点击卡片时，如果不是点击链接（比如空白处），则切换到该卡片
       if (!e.target.closest('a')) {
         if (i !== current) goTo(i);
       }
-      // 如果点击的是链接，会自动跳转到B站（无需额外处理）
     });
   });
 
