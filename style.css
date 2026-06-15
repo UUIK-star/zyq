@@ -274,8 +274,8 @@ a {
   align-items: center;
   justify-content: center;
   padding: 5rem 1.5rem 2.5rem;
-  background: var(--bg-works); /* 换成了设计好的浅蓝色背景 */
-  color: var(--text-dark); /* 修改该页整体文字颜色为深色，提升辨识度 */
+  background: var(--bg-works); /* 浅蓝色背景 */
+  color: var(--text-dark); /* 深色文本，适配明亮页面 */
   overflow: hidden;
 }
 
@@ -299,7 +299,7 @@ a {
   letter-spacing: 0.15em;
 }
 
-/* 3D 轮播台 + 云朵包裹层 */
+/* 3D 轮播区域及云朵挂载层 */
 .carousel-stage {
   width: 100%;
   max-width: 1100px;
@@ -309,7 +309,7 @@ a {
   position: relative;
 }
 
-/* 纯 CSS 绘制飘浮的卡通云朵 */
+/* 纯 CSS 卡通云朵 */
 .carousel-stage::before,
 .carousel-stage::after {
   content: "";
@@ -321,7 +321,6 @@ a {
   filter: drop-shadow(0 8px 16px rgba(0,0,0,0.05));
 }
 
-/* 左侧云朵 */
 .carousel-stage::before {
   width: 120px;
   height: 40px;
@@ -329,7 +328,7 @@ a {
   left: -40px;
   animation: floatCloudOne 8s ease-in-out infinite;
 }
-/* 右侧云朵 */
+
 .carousel-stage::after {
   width: 150px;
   height: 50px;
@@ -338,7 +337,6 @@ a {
   animation: floatCloudTwo 10s ease-in-out infinite;
 }
 
-/* 云朵微调造型的子影子细节 */
 .carousel-stage::before, .carousel-stage::after {
   box-shadow: 
     30px -20px 0 10px rgba(255, 255, 255, 0.85), 
@@ -384,7 +382,7 @@ a {
   filter: blur(8px);
 }
 
-/* 视频卡片样式 */
+/* 卡片基础样式 */
 .video-card {
   position: absolute;
   top: 0;
@@ -415,7 +413,7 @@ a {
   object-fit: cover;
 }
 
-/* 粉色圆底的播放图标 */
+/* 粉色圆底 B站播放键 */
 .bilibili-icon {
   position: absolute;
   top: 50%;
@@ -457,19 +455,19 @@ a {
   letter-spacing: 0.05em;
 }
 
-/* ===== 修正后的左右控制栏布局 ===== */
+/* ===== 精简且完美的左右双按键控制栏 ===== */
 .controls-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* 按钮左右彻底撑开分布 */
-  width: 140px; /* 契合原本椭圆控制条的理想宽度 */
+  justify-content: space-between; /* 按钮两端对称分布 */
+  width: 130px; /* 完美双键间距大小 */
   height: 52px;
   padding: 0 6px;
-  background: rgba(255, 255, 255, 0.5); /* 浅色半透明胶囊背景 */
+  background: rgba(255, 255, 255, 0.5); /* 干净的浅色半透明舱 */
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 30px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
   position: relative;
   z-index: 10;
 }
@@ -481,22 +479,22 @@ a {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  color: #333333; /* 暗色图标，防止在白底控制条中看不清 */
-  opacity: 0.75;
+  color: #222222; /* 强化箭头在浅色背景下的显色 */
+  opacity: 0.8;
   transition: opacity 0.2s, background-color 0.2s, transform 0.2s;
 }
 
 .ctrl-btn:hover {
   opacity: 1;
   background-color: rgba(255, 255, 255, 0.6);
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .ctrl-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.92);
 }
 
-/* 下方描述标签 */
+/* 底部标签 */
 .role-tags {
   margin-top: 2rem;
   font-size: clamp(0.75rem, 2vw, 0.85rem);
@@ -507,7 +505,7 @@ a {
   z-index: 5;
 }
 
-/* ===== 移动端响应式兼容 ===== */
+/* ===== 移动端适配 ===== */
 @media (max-width: 768px) {
   .hero-title {
     font-size: clamp(1.5rem, 6.5vw, 2.4rem);
